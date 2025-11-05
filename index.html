@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script defer src="script.js"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            background: #ecf0f1;
+            color: #2c3e50;
+        }
+        .dashboard-container {
+            display: flex;
+            width: 100%;
+        }
+        .sidebar {
+            width: 250px;
+            background: #34495e;
+            color: #fff;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .sidebar h2 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            padding: 10px;
+            margin: 5px 0;
+        }
+        .sidebar ul li a {
+            color: #fff;
+            text-decoration: none;
+            display: block;
+            transition: background 0.3s;
+        }
+        .sidebar ul li a.active, .sidebar ul li a:hover {
+            background: #1abc9c;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .dashboard-content {
+            flex: 1;
+            padding: 20px;
+        }
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fff;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        .stat-card {
+            background: #fff;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        .stat-card:hover {
+            transform: scale(1.05);
+        }
+        .recent-transactions {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        .borrowed { color: blue; }
+        .returned { color: green; }
+        .slider-container {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        .slider {
+            position: relative;
+            width: 50px;
+            height: 24px;
+            background: #ccc;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .slider::before {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            top: 2px;
+            left: 3px;
+            transition: 0.3s;
+        }
+        input:checked + .slider {
+            background: #1abc9c;
+        }
+        input:checked + .slider::before {
+            transform: translateX(26px);
+        }
+        .dark-mode-toggle input {
+            display: none;
+        }
+
+        
+
+#trendingBooksList {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+.book-item {
+    padding: 10px;
+    margin: 5px 0;
+    background: #ecf0f1;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.book-title {
+    flex: 2;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.book-author {
+    flex: 1.5;
+    color: #7f8c8d;
+}
+
+.book-genre {
+    flex: 1;
+    text-align: right;
+    color: #1abc9c;
+}
+
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div style="display: flex; align-items: center; gap: 10px; padding: 10px;">
+                <img src="logo.png" alt="Library Logo" style="width: 40px; height: 40px;">
+                <h2 style="margin: 0;">LibraryHub</h2>
+            </div>
+            <ul>
+                <li><a href="index.html" class="active">☰ Dashboard</a></li>
+                <li><a href="books.html" >📖 Books</a></li>
+                <li><a href="members.html" >🪪 Members</a></li>
+                <li><a href="fine.html">💵 Fine</a></li>
+                <li><a href="borrow.html" >🛒 Borrow Book</a></li>
+                <li><a href="settings.html" >⚙️ Settings</a></li>
+                <link rel="stylesheet" href="styles.css">
+
+                <li class="dark-mode-toggle">
+                    <span>🌙 Dark Mode</span>
+                    <label class="slider-container">
+                        <input type="checkbox" id="darkModeToggle">
+                        <span class="slider"></span>
+                    </label>
+                </li>
+            </ul>
+        </aside>
+        
+        <main class="dashboard-content">
+            <!-- Welcome Message -->
+            <header class="welcome-header">
+                <div id="welcome-container">
+                    <h2 id="welcomeMessage">Welcome, User!</h2>
+                </div>                
+                <p>Manage your library efficiently and keep track of all books, members, and transactions.</p>
+            </header>
+        
+            <!-- Dashboard Stats -->
+            <section class="dashboard-stats">
+                <div class="stat-card">
+                    <h3>Total Books 📖</h3>
+                    <p id="totalBooks">Loading...</p> <!-- Updated -->
+                </div>
+                <div class="stat-card">
+                    <h3>Members 🤝 </h3>
+                    <p id="totalMembers">Loading...</p> <!-- Updated -->
+                </div>
+                <div class="stat-card">
+                    <h3>Borrowed 📥</h3>
+                    <p id="borrowedBooks">Loading...</p> <!-- Updated -->
+                </div>
+                <div class="stat-card">
+                    <h3>Overdue 🚨</h3>
+                    <p id="overdueBooks">Loading...</p> <!-- Updated -->
+                </div>
+            </section>
+            <!-- Trending Books Section -->
+<section class="trending-books">
+    <h2>🔔 Trending Books</h2>
+    
+    <!-- Genre Filter -->
+    <label for="genreFilter">Filter by Genre:</label>
+    <select id="genreFilter">
+        <option value="">All Genres</option>
+        <option value="Fiction">Fiction</option>
+        <option value="Science & technology">Science & technology</option>
+        <option value="History">History</option>
+        <option value="Fantasy">Fantasy</option>
+        <option value="Romance">Romance</option>
+        <option value="Horror">Horror</option>
+        <option value="Classic">Classic</option>
+        <option value="Mystry & Thriller">Mystry & Thriller</option>
+        <option value="Self-Help">Self-Help</option>
+        <option value="Biography & Memoir">Biography & Memoir</option>
+
+    </select>
+
+    <ul id="trendingBooksList">
+        <li>Loading...</li> <!-- Placeholder -->
+    </ul>
+</section>
+
+        </main>
+        
+        
+    </div>
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Members Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="members.js"></script>
+</head>
+<body>
+    <style>
+        .slider-container {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        .slider {
+            position: relative;
+            width: 50px;
+            height: 24px;
+            background: #ccc;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .slider::before {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            top: 2px;
+            left: 3px;
+            transition: 0.3s;
+        }
+            input:checked + .slider {
+            background: #1abc9c;
+        }
+        input:checked + .slider::before {
+            transform: translateX(26px);
+        }
+        .dark-mode-toggle input {
+            display: none;
+        }
+    </style>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div style="display: flex; align-items: center; gap: 10px; padding: 10px;">
+                <img src="logo.png" alt="Library Logo" style="width: 40px; height: 40px;">
+                <h2 style="margin: 0;">LibraryHub</h2>
+            </div>
+            <ul>
+                <li><a href="index.html">☰ Dashboard</a></li>
+                <li><a href="books.html">📖 Books</a></li>
+                <li><a href="members.html" class="active">🪪 Members</a></li>
+                <li><a href="fine.html">💵 Fine</a></li>
+                <li><a href="borrow.html" >🛒 Borrow Book</a></li>
+                <li><a href="settings.html">⚙️ Settings</a></li>
+
+                <li class="dark-mode-toggle">
+                    <span>🌙 Dark Mode</span>
+                    <label class="slider-container">
+                        <input type="checkbox" id="darkModeToggle">
+                        <span class="slider"></span>
+                    </label>
+                </li>
+            </ul>
+        </aside>
+
+        <main class="dashboard-content">
+            <header class="top-nav">
+                <h2>🪪 Members Management</h2>
+                <button id="addMemberBtn">╋ Add Member</button>
+            </header>
+            <div class="search-container">
+                <input type="text" id="searchMember" placeholder="Search by member Id or name">
+ 
+            </div>
+            <section class="members-list">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Member ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Membership Type</th>
+                            <th>Since</th>
+                            <th>Fine</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody id="membersTableBody">
+                        <!-- Members data will be added dynamically -->
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal for Adding/Editing Members -->
+<div id="memberModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h3 id="modalTitle">Add Member</h3> <!-- This will be updated dynamically -->
+        <form id="memberForm">
+            <!-- Hidden input for editing a member -->
+            <input type="hidden" id="memberId">
+
+            <label for="memberName">Name:</label>
+            <input type="text" id="memberName" name="memberName" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="membershipType">Membership Type:</label>
+            <select id="membershipType" name="membershipType" required>
+                <option value="Standard">Standard</option>
+                <option value="Premium">Premium</option>
+                <option value="VIP">VIP</option>
+            </select>
+
+            <label for="membershipStart">Membership Start Date:</label>
+            <input type="date" id="membershipStart" name="membershipStart" required>
+
+            <button type="submit" id="saveMemberBtn">Save</button>
+        </form>
+    </div>
+</div>
+
+    <!-- Modal for Reserving a Book -->
+    <div id="reserveModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Reserve a Book</h3>
+            <form id="reserveForm">
+                <label for="memberSelect">Select Member:</label>
+                <select id="memberSelect">
+                    <!-- Members will be loaded dynamically -->
+                </select>
+
+                <label for="bookSelect">Select Book:</label>
+                <select id="bookSelect">
+                    
+                    <!-- Books will be loaded dynamically -->
+                </select>
+
+                <label for="dueDate">Due Date:</label>
+                <input type="date" id="dueDate" required>
+
+                <button type="submit">Reserve</button>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>

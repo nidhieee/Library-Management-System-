@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="books.js"></script>
+</head>
+<body>
+    <style>
+        .slider-container {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        .slider {
+            position: relative;
+            width: 50px;
+            height: 24px;
+            background: #ccc;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .slider::before {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            top: 2px;
+            left: 3px;
+            transition: 0.3s;
+        }
+            input:checked + .slider {
+            background: #1abc9c;
+        }
+        input:checked + .slider::before {
+            transform: translateX(26px);
+        }
+        .dark-mode-toggle input {
+            display: none;
+        }
+    </style>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div style="display: flex; align-items: center; gap: 10px; padding: 10px;">
+                <img src="logo.png" alt="Library Logo" style="width: 40px; height: 40px;">
+                <h2 style="margin: 0;">LibraryHub</h2>
+            </div>
+            <ul>
+                <li><a href="index.html">☰ Dashboard</a></li>
+                <li><a href="books.html" class="active">📖 Books</a></li>
+                <li><a href="members.html">🪪 Members</a></li>
+                <li><a href="fine.html">💵 Fine</a></li>
+                <li><a href="borrow.html" >🛒 Borrow Book</a></li>
+                <li><a href="settings.html">⚙️ Settings</a></li>
+                <li class="dark-mode-toggle">
+                    <span>🌙 Dark Mode</span>
+                    <label class="slider-container">
+                        <input type="checkbox" id="darkModeToggle">
+                        <span class="slider"></span>
+                    </label>
+                </li>
+            </ul>
+        </aside>
+
+        <main class="dashboard-content">
+            <header class="top-nav">
+                <h2>📖 Books Management</h2>
+                <button id="addBookBtn">╋ Add Book</button>
+            </header>
+            <div class="search-container">
+                <input type="text" id="searchBook" placeholder="Search by ID or name">
+                <button id="searchBtn">🔍 Search</button>
+            </div>
+
+
+            <section class="books-list">
+                <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Book ID</th>
+                            <th>Name</th>
+                            <th>Author</th>
+                            <th>Published Year</th>
+                            <th>Genre</th>
+                            <th>Availability</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="booksTableBody">
+                        <!-- Book data will be dynamically added here -->
+                    </tbody>
+                </table>
+            </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal for Adding/Updating Books -->
+<div id="bookModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h3 id="modalTitle">Add Book</h3>
+        <form id="bookForm">
+            <input type="hidden" id="bookId">
+
+            <label for="bookName">Name:</label>
+            <input type="text" id="bookName" required>
+
+            <label for="bookAuthor">Author:</label>
+            <input type="text" id="bookAuthor" required>
+
+
+            <label for="bookYear">Published Year:</label>
+            <input type="number" id="bookYear" required>
+
+
+            <label for="bookGenre">Genre:</label>
+            <select id="bookGenre" required>
+                <option value="">Select Genre</option>  
+            </select>
+
+
+            <label for="totalCopies">Total Copies:</label>
+            <input type="number" id="totalCopies" min="1" required>
+            
+            <label for="availableCopies">Available Copies:</label>
+            <input type="number" id="availableCopies" min="0" required>
+            
+
+            <button type="submit">Save</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
